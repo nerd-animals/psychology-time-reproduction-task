@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/home" element={home()} />
+        <Route path="/" element={home()} />
         <Route path="/task" element={task()} />
         <Route path="/setting" element={setting()} />
         <Route path="*" element={notFound()} />

@@ -4,7 +4,7 @@ export default function setting() {
   return (
     <>
       <div>this is setting page</div>
-      <Link to="/home">go home</Link>
+      <Link to="/">go home</Link>
     </>
   );
 }

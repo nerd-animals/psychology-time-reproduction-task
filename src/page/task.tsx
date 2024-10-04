@@ -4,7 +4,7 @@ export default function task() {
   return (
     <>
       <div>this is task page</div>
-      <Link to="/home">go home</Link>
+      <Link to="/">go home</Link>
     </>
   );
 }
