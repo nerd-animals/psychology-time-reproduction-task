@@ -6,7 +6,7 @@ import notFound from './page/notFound';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/home" element={home()} />
         <Route path="/task" element={task()} />
