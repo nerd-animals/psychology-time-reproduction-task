@@ -66,6 +66,7 @@ export default function taskBox({
 
       {isActive && !isVisible && (
         <button
+          className="border"
           type="button"
           onClick={() => {
             setIsVisible(true);
@@ -77,6 +78,7 @@ export default function taskBox({
       )}
       {isActive && isVisible && (
         <button
+          className="border"
           type="button"
           onClick={() => {
             appendResult();
