@@ -13,13 +13,7 @@ export default function task({
   addResult: (result: Result) => void;
   setAppStep: React.Dispatch<React.SetStateAction<AppStep>>;
 }) {
-  const {
-    sessionList,
-    initializeTime,
-    waitTime,
-    visibleTime,
-    sessionChangeTime,
-  } = appSetting;
+  const { sessionList, initializeTime, sessionChangeTime } = appSetting;
   const [isInitailized, setIsInitailized] = useState<boolean>(false);
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const [sessionIndex, setSessionIndex] = useState<number>(0);
@@ -60,10 +54,7 @@ export default function task({
       {isInitailized && isFinished === false && (
         <TaskBox
           session={currentSession}
-          waitTime={waitTime}
-          visibleTime={visibleTime}
-          correctColor="bg-gray-300"
-          wrongColor="bg-gray-300"
+          waitTime={appSetting.waitTime}
           setIsFinished={setIsFinished}
           addResult={addResult}
         />

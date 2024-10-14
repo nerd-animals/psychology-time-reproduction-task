@@ -1,16 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import {
-  AppSetting,
-  AppStep,
-  Session,
-  DIFF_FLAG,
-  SAME_FLAG,
-  NONE_FLAG,
-} from '../lib/type';
+import { AppSetting, AppStep, Session } from '../lib/type';
 import Button from '../component/button';
-
-const VALID_BACK_COUNT = [2, 3, 4];
 
 export default function setting({
   appSetting,
@@ -25,25 +16,6 @@ export default function setting({
     ...appSetting,
   });
 
-  const solveSession = (session: Session) => {
-    const { backCount } = newAppSetting;
-
-    const solutionList = session.taskList.map((value, index) => {
-      if (index < backCount) {
-        return NONE_FLAG;
-      }
-      const nBackValue = session.taskList.at(index - backCount);
-
-      if (value === nBackValue) {
-        return SAME_FLAG;
-      }
-      return DIFF_FLAG;
-    });
-
-    const solvedSession = { ...session, solutionList: [...solutionList] };
-    return solvedSession;
-  };
-
   return (
     <div className="space-y-4 w-full max-w-md">
       <Button
@@ -57,7 +29,6 @@ export default function setting({
                 id: uuid(),
                 sessionIndex: newAppSetting.sessionList.length,
                 taskList: [],
-                solutionList: [],
               },
             ],
           })
@@ -78,21 +49,6 @@ export default function setting({
         }}
       />
       <div className="flex space-x-2">
-        <div>back count</div>
-        <input
-          type="number"
-          value={newAppSetting.backCount}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            const value = e.target.valueAsNumber || 0;
-            if (VALID_BACK_COUNT.includes(value)) {
-              setNewAppSetting({ ...newAppSetting, backCount: value });
-            } else {
-              // alert
-            }
-          }}
-        />
-      </div>
-      <div className="flex space-x-2">
         <div>initializeTime(ms)</div>
         <input
           type="number"
@@ -111,28 +67,6 @@ export default function setting({
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const value = e.target.valueAsNumber || 0;
             setNewAppSetting({ ...newAppSetting, sessionChangeTime: value });
-          }}
-        />
-      </div>
-      <div className="flex space-x-2">
-        <div>visibleTime(ms)</div>
-        <input
-          type="number"
-          value={newAppSetting.visibleTime}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            const value = e.target.valueAsNumber || 0;
-            setNewAppSetting({ ...newAppSetting, visibleTime: value });
-          }}
-        />
-      </div>
-      <div className="flex space-x-2">
-        <div>waitTime(ms)</div>
-        <input
-          type="number"
-          value={newAppSetting.waitTime}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            const value = e.target.valueAsNumber || 0;
-            setNewAppSetting({ ...newAppSetting, waitTime: value });
           }}
         />
       </div>
@@ -191,15 +125,8 @@ export default function setting({
       <Button
         label="save"
         onClick={() => {
-          const solvedTrialSession = solveSession(newAppSetting.trialSession);
-          const solvedSessionList = newAppSetting.sessionList.map((session) =>
-            solveSession(session)
-          );
-
           setAppSetting({
             ...newAppSetting,
-            trialSession: { ...solvedTrialSession },
-            sessionList: [...solvedSessionList],
           });
         }}
       />

@@ -1,53 +1,34 @@
 import { useEffect, useRef, useState } from 'react';
-import { DIFF_FLAG, NONE_FLAG, SAME_FLAG, Session, Result } from '../lib/type';
+import { Session, Result } from '../lib/type';
 
-const SAME_FLAG_CODE = 'Slash';
-const DIFF_FLAG_CODE = 'KeyZ';
+const SQUARE_SIZE = 25;
 
 export default function taskBox({
   session,
   waitTime,
-  visibleTime,
-  correctColor,
-  wrongColor,
   setIsFinished,
   addResult,
 }: {
   session: Session;
   waitTime: number;
-  visibleTime: number;
-  correctColor: string;
-  wrongColor: string;
   setIsFinished: (isFinished: boolean) => void;
   addResult: (result: Result) => void;
 }) {
   const [index, setIndex] = useState<number>(0);
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [color, setColor] = useState<string>('');
-  const submittedAnswerRef = useRef<string | undefined>(undefined);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(false);
   const initialTimeRef = useRef<number>(window.performance.now());
-  const durationRef = useRef<number>(-1);
   const visibleTimer = useRef<number>();
-  const { sessionIndex, taskList, solutionList } = session;
+  const { sessionIndex, taskList } = session;
 
   const appendResult = () => {
     const result: Result = {
       sessionIndex,
       taskIndex: index,
       value: taskList[index],
-      solution: solutionList[index],
-      submittedAnswer: submittedAnswerRef.current || NONE_FLAG,
-      duration: durationRef.current,
+      submittedAnswer: window.performance.now() - initialTimeRef.current,
     };
     addResult(result);
-  };
-
-  const displayResult = () => {
-    if (submittedAnswerRef.current === solutionList[index]) {
-      setColor(correctColor);
-    } else {
-      setColor(wrongColor);
-    }
   };
 
   useEffect(() => {
@@ -57,51 +38,56 @@ export default function taskBox({
     }
 
     visibleTimer.current = window.setTimeout(() => {
-      setIsVisible(false);
-
+      setIsVisible(true);
       visibleTimer.current = window.setTimeout(() => {
-        appendResult();
-        setIsVisible(true);
-        setIndex((prev) => prev + 1);
-        setColor('');
-        initialTimeRef.current = window.performance.now();
-        submittedAnswerRef.current = undefined;
-        durationRef.current = -1;
-      }, waitTime);
-    }, visibleTime);
+        setIsVisible(false);
+        setIsActive(true);
+      }, taskList[index]);
+    }, waitTime);
 
     return () => window.clearTimeout(visibleTimer.current);
   }, [index]);
 
-  // key event
-  useEffect(() => {
-    const onKeydown = (e: KeyboardEvent) => {
-      e.preventDefault();
-      if (submittedAnswerRef.current) return; //
-
-      if (e.code === DIFF_FLAG_CODE) {
-        submittedAnswerRef.current = DIFF_FLAG;
-        durationRef.current = window.performance.now() - initialTimeRef.current;
-        displayResult();
-      } else if (e.code === SAME_FLAG_CODE) {
-        submittedAnswerRef.current = SAME_FLAG;
-        durationRef.current = window.performance.now() - initialTimeRef.current;
-        displayResult();
-      }
-    };
-    window.addEventListener('keydown', onKeydown);
-
-    return () => window.removeEventListener('keydown', onKeydown);
-  }, [index]);
-
   return (
-    <div
-      className={`w-full h-full flex items-center justify-center ${color}`}
-      style={{
-        fontSize: 'min(5vw, 5vh)',
-      }}
-    >
-      {isVisible ? taskList[index] : '+'}
+    <div className="flex-col items-center justify-center">
+      <div
+        className={
+          isVisible
+            ? 'flex items-center justify-center bg-red-300'
+            : 'invisible'
+        }
+        style={{
+          width: `${SQUARE_SIZE}vw`,
+          height: `${SQUARE_SIZE}vh`,
+          maxWidth: `min(${SQUARE_SIZE}vw, ${SQUARE_SIZE}vh)`,
+          maxHeight: `min(${SQUARE_SIZE}vw, ${SQUARE_SIZE}vh)`,
+        }}
+      />
+
+      {isActive && !isVisible && (
+        <button
+          type="button"
+          onClick={() => {
+            setIsVisible(true);
+            initialTimeRef.current = window.performance.now();
+          }}
+        >
+          시작
+        </button>
+      )}
+      {isActive && isVisible && (
+        <button
+          type="button"
+          onClick={() => {
+            appendResult();
+            setIndex((prev) => prev + 1);
+            setIsVisible(false);
+            setIsActive(false);
+          }}
+        >
+          정지
+        </button>
+      )}
     </div>
   );
 }

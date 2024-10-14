@@ -28,15 +28,12 @@ export default function postTask({
           data={resultList.map((result) => ({
             name: subject.subjectLabel,
             date: subject.date.toLocaleString(),
-            backCount: appSetting.backCount,
             initializeTime: appSetting.initializeTime,
             sessionChangeTime: appSetting.sessionChangeTime,
-            visibleTime: appSetting.visibleTime,
-            waitTime: appSetting.waitTime,
             ...result,
             sessionIndex: result.sessionIndex + 1,
             taskIndex: result.taskIndex + 1,
-            score: result.solution === result.submittedAnswer ? 1 : 0,
+            diff: result.submittedAnswer - result.value,
           }))}
           target="_blank"
         />

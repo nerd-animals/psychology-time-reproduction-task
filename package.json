@@ -1,7 +1,7 @@
 {
-  "name": "psychology-n-back-task",
+  "name": "psychology-time-reproduction-task",
   "version": "0.1.0",
-  "homepage": "https://nerd-animals.github.io/psychology-n-back-task/",
+  "homepage": "https://nerd-animals.github.io/psychology-time-reproduction-task/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

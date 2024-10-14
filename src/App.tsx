@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { v4 as uuid } from 'uuid';
 import Home from './step/home';
 import Setup from './step/setup';
 import StandBy from './step/standBy';
@@ -12,18 +13,26 @@ import Container from './component/container';
 import { AppSetting, AppStep, Subject, Result } from './lib/type';
 
 const INITIAL_APP_SETTING: AppSetting = {
-  backCount: 2,
   initializeTime: 3000,
-  visibleTime: 300,
-  waitTime: 1000,
   sessionChangeTime: 3000,
+  waitTime: 3000,
   trialSession: {
     id: 'trial',
     sessionIndex: 0,
-    taskList: [],
-    solutionList: [],
+    taskList: [1000, 2000],
   },
-  sessionList: [],
+  sessionList: [
+    {
+      id: uuid(),
+      sessionIndex: 0,
+      taskList: [1000, 2000],
+    },
+    {
+      id: uuid(),
+      sessionIndex: 0,
+      taskList: [1000, 2000],
+    },
+  ],
 };
 
 const INITIAL_SUBJECT: Subject = {
@@ -31,17 +40,14 @@ const INITIAL_SUBJECT: Subject = {
   date: new Date(),
 };
 
-const NO_CURSOR_STEP = ['task', 'trial'];
-
 function App() {
   const [appStep, setAppStep] = useState<AppStep>('home');
   const subjectRef = useRef<Subject>(INITIAL_SUBJECT);
   const appSettingRef = useRef<AppSetting>(INITIAL_APP_SETTING);
   const resultRef = useRef<Result[]>([]);
 
-  const cursorOption = NO_CURSOR_STEP.includes(appStep) ? 'cursor-none' : '';
   return (
-    <main className={`${cursorOption}`}>
+    <main>
       <Container>
         {appStep === 'home' && (
           <Home appSetting={appSettingRef.current} setAppStep={setAppStep} />
