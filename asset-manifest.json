@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/psychology-time-reproduction-task/static/css/main.97a1966b.css",
+    "main.js": "/psychology-time-reproduction-task/static/js/main.d3304a5d.js",
+    "index.html": "/psychology-time-reproduction-task/index.html",
+    "main.97a1966b.css.map": "/psychology-time-reproduction-task/static/css/main.97a1966b.css.map",
+    "main.d3304a5d.js.map": "/psychology-time-reproduction-task/static/js/main.d3304a5d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.97a1966b.css",
+    "static/js/main.d3304a5d.js"
+  ]
+}
