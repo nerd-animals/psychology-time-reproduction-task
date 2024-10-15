@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Session, Result } from '../lib/type';
 
-const SQUARE_SIZE = 25;
+const SQUARE_SIZE = 30;
 
 export default function taskBox({
   session,
@@ -31,6 +31,18 @@ export default function taskBox({
     addResult(result);
   };
 
+  const handleStart = () => {
+    setIsVisible(true);
+    initialTimeRef.current = window.performance.now();
+  };
+
+  const handleEnd = () => {
+    appendResult();
+    setIndex((prev) => prev + 1);
+    setIsVisible(false);
+    setIsActive(false);
+  };
+
   useEffect(() => {
     if (index >= taskList.length) {
       setIsFinished(true);
@@ -49,7 +61,7 @@ export default function taskBox({
   }, [index]);
 
   return (
-    <div className="flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center">
       <div
         className={
           isVisible
@@ -61,33 +73,17 @@ export default function taskBox({
           height: `${SQUARE_SIZE}vh`,
           maxWidth: `min(${SQUARE_SIZE}vw, ${SQUARE_SIZE}vh)`,
           maxHeight: `min(${SQUARE_SIZE}vw, ${SQUARE_SIZE}vh)`,
+          marginBottom: '5vh',
         }}
       />
 
-      {isActive && !isVisible && (
+      {isActive && (
         <button
-          className="border"
+          className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
           type="button"
-          onClick={() => {
-            setIsVisible(true);
-            initialTimeRef.current = window.performance.now();
-          }}
+          onClick={isVisible ? handleEnd : handleStart}
         >
-          시작
-        </button>
-      )}
-      {isActive && isVisible && (
-        <button
-          className="border"
-          type="button"
-          onClick={() => {
-            appendResult();
-            setIndex((prev) => prev + 1);
-            setIsVisible(false);
-            setIsActive(false);
-          }}
-        >
-          정지
+          {isVisible ? '정지' : '시작'}
         </button>
       )}
     </div>
