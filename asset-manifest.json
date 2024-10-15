@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/psychology-time-reproduction-task/static/css/main.97a1966b.css",
-    "main.js": "/psychology-time-reproduction-task/static/js/main.d3304a5d.js",
+    "main.css": "/psychology-time-reproduction-task/static/css/main.cb4f0903.css",
+    "main.js": "/psychology-time-reproduction-task/static/js/main.dfbcacc8.js",
     "index.html": "/psychology-time-reproduction-task/index.html",
-    "main.97a1966b.css.map": "/psychology-time-reproduction-task/static/css/main.97a1966b.css.map",
-    "main.d3304a5d.js.map": "/psychology-time-reproduction-task/static/js/main.d3304a5d.js.map"
+    "main.cb4f0903.css.map": "/psychology-time-reproduction-task/static/css/main.cb4f0903.css.map",
+    "main.dfbcacc8.js.map": "/psychology-time-reproduction-task/static/js/main.dfbcacc8.js.map"
   },
   "entrypoints": [
-    "static/css/main.97a1966b.css",
-    "static/js/main.d3304a5d.js"
+    "static/css/main.cb4f0903.css",
+    "static/js/main.dfbcacc8.js"
   ]
 }
