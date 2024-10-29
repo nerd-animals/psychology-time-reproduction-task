@@ -63,9 +63,7 @@ function App() {
         {appStep === 'stand-by' && (
           <StandBy subject={subjectRef.current} setAppStep={setAppStep} />
         )}
-        {appStep === 'explain' && (
-          <Explain appSetting={appSettingRef.current} setAppStep={setAppStep} />
-        )}
+        {appStep === 'explain' && <Explain setAppStep={setAppStep} />}
         {appStep === 'trial' && (
           <Trial appSetting={appSettingRef.current} setAppStep={setAppStep} />
         )}
