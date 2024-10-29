@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { AppSetting, AppStep } from '../lib/type';
-import Button from '../component/button';
+import { AppStep } from '../lib/type';
 
 export default function explain({
-  appSetting,
   setAppStep,
 }: {
-  appSetting: AppSetting;
   setAppStep: React.Dispatch<React.SetStateAction<AppStep>>;
 }) {
   const [index, setIndex] = useState<number>(0);

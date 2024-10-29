@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppStep } from '../lib/type';
-import Button from '../component/button';
 
 export default function preTask({
   setAppStep,
